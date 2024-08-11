@@ -1,6 +1,6 @@
 package com.example.chat.mvc.service
 
-import com.example.chat.mvc.model.ChatMessage
+import com.example.chat.mvc.model.Chat
 import com.example.chat.mvc.model.MessageType
 import com.example.chat.mvc.model.Room
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,26 +13,26 @@ class MessageSender(
     private val mapper: ObjectMapper
 ) {
 
-    fun handleAction(session: WebSocketSession, room: Room, chatMessage: ChatMessage) {
-        when (chatMessage.type) {
+    fun handleAction(session: WebSocketSession, room: Room, chat: Chat) {
+        when (chat.type) {
             MessageType.WELCOME -> {
                 room.addSession(session)
-                chatMessage.content = "${chatMessage.sender} 님이 입장하셨습니다"
-                room.sendMessageToSessions(makeMessage(chatMessage))
+                chat.content = "${chat.sender} 님이 입장하셨습니다"
+                room.sendMessageToSessions(makeMessage(chat))
             }
             MessageType.TALK -> {
-                room.sendMessageToSessions(makeMessage(chatMessage))
+                room.sendMessageToSessions(makeMessage(chat))
             }
             MessageType.LEAVE -> {
                 room.removeSession(session)
-                chatMessage.content = "${chatMessage.sender} 님이 나가셨습니다"
-                room.sendMessageToSessions(makeMessage(chatMessage))
+                chat.content = "${chat.sender} 님이 나가셨습니다"
+                room.sendMessageToSessions(makeMessage(chat))
             }
         }
     }
 
-    private fun makeMessage(chatMessage: ChatMessage): TextMessage {
-        return TextMessage(mapper.writeValueAsString(chatMessage))
+    private fun makeMessage(chat: Chat): TextMessage {
+        return TextMessage(mapper.writeValueAsString(chat))
     }
 
 }

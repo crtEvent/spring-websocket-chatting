@@ -18,8 +18,8 @@ class RoomManager {
     }
 
     fun save(name: String): Room {
-        val chatRoom = Room.create(name)
-        rooms[chatRoom.roomId] = chatRoom
-        return chatRoom
+        val room = Room.create(name)
+        rooms[room.roomId] = room
+        return room
     }
 }

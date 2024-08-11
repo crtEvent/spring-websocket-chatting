@@ -1,6 +1,6 @@
 package com.example.chat.system
 
-import com.example.chat.mvc.model.ChatMessage
+import com.example.chat.mvc.model.Chat
 import com.example.chat.mvc.model.Room
 import com.example.chat.mvc.service.MessageSender
 import com.example.chat.mvc.service.RoomManager
@@ -20,12 +20,12 @@ class ChattingHandler(
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         val payload = message.payload
 
-        val chatMessage: ChatMessage = mapper.readValue(payload, ChatMessage::class.java)
+        val chat: Chat = mapper.readValue(payload, Chat::class.java)
 
-        val chatRoom: Room = roomManager.findById(chatMessage.roomId)
-            ?: throw RoomNotFoundException("Room with ID ${chatMessage.roomId} not found")
+        val room: Room = roomManager.findById(chat.roomId)
+            ?: throw RoomNotFoundException("Room with ID ${chat.roomId} not found")
 
-        messageSender.handleAction(session, chatRoom, chatMessage)
+        messageSender.handleAction(session, room, chat)
     }
 
 }

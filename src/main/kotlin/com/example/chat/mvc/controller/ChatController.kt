@@ -11,12 +11,14 @@ class ChatController(
 ) {
 
     @GetMapping("/rooms")
-    fun findAllRooms(): List<Room> {
-        return roomManager.findAll()
+    fun findAllRooms(): List<RoomResponse> {
+        return roomManager.findAll().map { room ->
+            RoomResponse.from(room)
+        }
     }
 
     @PostMapping("/rooms")
-    fun createRoom(@RequestParam name: String): Room {
-        return roomManager.save(name)
+    fun createRoom(@RequestParam name: String): RoomResponse {
+        return RoomResponse.from(roomManager.save(name))
     }
 }

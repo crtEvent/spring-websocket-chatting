@@ -1,5 +1,6 @@
 package com.example.chat.system
 
+import com.example.chat.mvc.controller.ChatRequest
 import com.example.chat.mvc.model.Chat
 import com.example.chat.mvc.model.Room
 import com.example.chat.mvc.service.MessageSender
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
+import java.time.Instant
 
 @Component
 class ChattingHandler(
@@ -20,7 +22,8 @@ class ChattingHandler(
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         val payload = message.payload
 
-        val chat: Chat = mapper.readValue(payload, Chat::class.java)
+        val chat: Chat = mapper.readValue(payload, ChatRequest::class.java)
+            .to(Instant.now())
 
         val room: Room = roomManager.findById(chat.roomId)
             ?: throw RoomNotFoundException("Room with ID ${chat.roomId} not found")

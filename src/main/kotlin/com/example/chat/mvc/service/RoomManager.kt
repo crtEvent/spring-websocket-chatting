@@ -19,7 +19,7 @@ class RoomManager {
 
     fun save(name: String): Room {
         val room = Room.create(name)
-        rooms[room.roomId] = room
+        rooms[room.id] = room
         return room
     }
 }

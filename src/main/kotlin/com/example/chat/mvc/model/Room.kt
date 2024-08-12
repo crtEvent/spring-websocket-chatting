@@ -8,15 +8,15 @@ import java.util.*
 import kotlin.collections.HashSet
 
 class Room private constructor(
-    val roomId: String,  // 채팅방 아이디
+    val id: String,  // 채팅방 아이디
     val name: String,    // 채팅방 이름
     private val socketSessions: MutableSet<WebSocketSession> = HashSet(), // 참여자들의 session들
 ) {
 
     companion object {
         fun create(name: String): Room {
-            val roomId = UUID.randomUUID().toString()
-            return Room(roomId = roomId, name = name)
+            val id = UUID.randomUUID().toString()
+            return Room(id = id, name = name)
         }
     }
 

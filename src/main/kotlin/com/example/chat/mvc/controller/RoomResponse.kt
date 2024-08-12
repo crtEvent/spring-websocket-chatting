@@ -9,7 +9,7 @@ data class RoomResponse(
     companion object {
         @JvmStatic
         fun from(room: Room): RoomResponse {
-            return RoomResponse(id = room.roomId, name = room.name)
+            return RoomResponse(id = room.id, name = room.name)
         }
     }
 }

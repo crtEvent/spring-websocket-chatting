@@ -10,12 +10,12 @@ class ChatController(
     private val roomManager: RoomManager
 ) {
 
-    @GetMapping("/chat-rooms")
+    @GetMapping("/rooms")
     fun findAllRooms(): List<Room> {
         return roomManager.findAll()
     }
 
-    @PostMapping("/chat-rooms")
+    @PostMapping("/rooms")
     fun createRoom(@RequestParam name: String): Room {
         return roomManager.save(name)
     }

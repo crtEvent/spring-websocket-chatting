@@ -17,16 +17,16 @@ class MessageSender(
         when (chat.type) {
             MessageType.WELCOME -> {
                 room.addSession(session)
-                chat.content = "${chat.sender} 님이 입장하셨습니다"
-                room.sendMessageToSessions(makeMessage(chat))
+                val welcomeChat = chat.toWelcome()
+                room.sendMessageToSessions(makeMessage(welcomeChat))
             }
             MessageType.TALK -> {
                 room.sendMessageToSessions(makeMessage(chat))
             }
             MessageType.LEAVE -> {
                 room.removeSession(session)
-                chat.content = "${chat.sender} 님이 나가셨습니다"
-                room.sendMessageToSessions(makeMessage(chat))
+                val leaveChat = chat.toLeave()
+                room.sendMessageToSessions(makeMessage(leaveChat))
             }
         }
     }

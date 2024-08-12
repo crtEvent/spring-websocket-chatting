@@ -25,7 +25,7 @@ class ChattingHandler(
         val room: Room = roomManager.findById(chat.roomId)
             ?: throw RoomNotFoundException("Room with ID ${chat.roomId} not found")
 
-        messageSender.handleAction(session, room, chat)
+        messageSender.send(session, room, chat)
     }
 
 }

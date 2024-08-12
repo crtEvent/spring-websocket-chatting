@@ -13,7 +13,7 @@ class MessageSender(
     private val mapper: ObjectMapper
 ) {
 
-    fun handleAction(session: WebSocketSession, room: Room, chat: Chat) {
+    fun send(session: WebSocketSession, room: Room, chat: Chat) {
         when (chat.type) {
             MessageType.WELCOME -> {
                 room.addSession(session)
